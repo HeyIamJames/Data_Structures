@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-#source of info http://interactivepython.org/runestone/static/pythonds/Trees/bst.html
+# source of info http://interactivepython.org/runestone/static/pythonds/Trees/bst.html
+
 
 class Node(object):
     def __init__(self, val, left=None, right=None, parent=None):
@@ -23,13 +25,13 @@ class Node(object):
         return max(left_depth, right_depth) + 1
 
     def get_dot(self):
-            """return the tree with root 'self' as a dot graph for visualization"""
-            return "digraph G{\n%s}" % ("" if self.val is None else (
-                "\t%s;\n%s\n" % (
-                    self.val,
-                    "\n".join(self._get_dot())
-                )
-            ))
+        """return the tree with root 'self' as a dot graph for visualization"""
+        return "digraph G{\n%s}" % ("" if self.val is None else (
+            "\t%s;\n%s\n" % (
+                self.val,
+                "\n".join(self._get_dot())
+            )
+        ))
 
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
@@ -53,6 +55,7 @@ class Node(object):
 
 class BinarySearchTree(object):
     root = None
+
     def __init__(self):
         """Initialize a binary search tree"""
         self.root = None
@@ -104,4 +107,3 @@ if __name__ == '__main__':
     tree.insert(5)
     tree.insert(9)
     tree.insert(2)
-
