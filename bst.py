@@ -9,6 +9,16 @@ class Node(object):
         self.right = right
         self.parent = parent
 
+    # def depth_helper(self):
+    #     left_depth = self.left.depth() if self.left else 0
+    #     right_depth = self.right.depth() if self.right else 0
+    #     return ((left_depth + 1), (right_depth + 1))
+
+    def depth(self):
+        left_depth = self.left.depth() if self.left else 0
+        right_depth = self.right.depth() if self.right else 0
+        return max(left_depth, right_depth) + 1
+
     def get_dot(self):
             """return the tree with root 'self' as a dot graph for visualization"""
             return "digraph G{\n%s}" % ("" if self.val is None else (
@@ -79,16 +89,19 @@ class BinarySearchTree(object):
             return self.root.depth()
 
     def balance(self):
-        """If more values on right reutns 1, if left -1. Else 0"""
-        
+        """If more values on right returns 1, if left -1. Else 0"""
+        if self.depth == 1:
+            return 0
+        elif self.root.right_depth > self.depth.left_depth:
+            return 1
+        else:
+            return -1
+
 
 if __name__ == '__main__':
-    x = Node(5)
-    y = Node(9)
-    z = Node(2)
     tree = BinarySearchTree()
-    tree.insert(x)
-    tree.insert(y)
-    tree.insert(z)
-    x.val
-    tree.contains(y)
+    tree.insert(5)
+    tree.insert(9)
+    tree.insert(2)
+    tree.insert(1)
+
