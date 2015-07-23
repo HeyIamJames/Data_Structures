@@ -44,6 +44,15 @@ class Node(object):
             for val in self.right.in_order():
                 yield val
 
+    def post_order(self):
+        if self.left:
+            for val in self.left.in_order():
+                yield val
+        if self.right:
+            for val in self.right.in_order():
+                yield val
+        yield self.val
+
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
         if self.left is not None:
@@ -117,6 +126,9 @@ class BinarySearchTree(object):
 
     def in_order(self):
         return self.root.in_order()
+
+    def post_order(self):
+        return self.root.post_order()
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
