@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import random
+import timeit
 # source of info http://interactivepython.org/runestone/static/pythonds/Trees/bst.html
 
 
@@ -111,6 +112,14 @@ if __name__ == '__main__':
     tree = BinarySearchTree()
     for i in range(10):
         tree.insert(random.randint(1, 100))
+    tree2 = BinarySearchTree()
+    for i in range(100):
+        tree.insert(i)
     dot_tree = tree.get_dot()
     with open('test.gv', 'w') as fh:
         fh.write(dot_tree)
+    #worst case
+    print timeit.timeit(tree2.contains(99))
+    #best case
+    print timeit.timeit(tree2.contains(1))
+
