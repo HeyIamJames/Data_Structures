@@ -36,17 +36,26 @@ class Node(object):
                 yield val
 
     def in_order(self):
-        if not self.left:
-            yield self.val
-        elif self.left:
-            for val in self.left.in_order():
+        if self.left:
+            for val in self.left.pre_order():
                 yield val
-        elif not self.right:
-            yield self.val
-        elif self.right:
-            for val in self.right.in_order():
+        yield self.val
+        if self.right:
+            for val in self.right.pre_order():
                 yield val
 
+    def post_order(self):
+        "leftmost, left on R, root"
+        if self.right:
+            for val in self.right.pre_order():
+                yield val
+        if self.left:
+            for val in self.left.pre_order():
+                yield val
+        yield self.val
+
+    def bredth_first(self):
+        
 
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
@@ -122,6 +131,9 @@ class BinarySearchTree(object):
     def in_order(self):
         return self.root.in_order()
 
+    def post_order(self):
+        return self.root.post_order()
+
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
         return "digraph G{\n%s}" % ("" if self.root is None else (
@@ -130,6 +142,7 @@ class BinarySearchTree(object):
                 "\n".join(self.root._get_dot())
             )
         ))
+# dot -Tpng test.gv -o testGraph.png
 
 
 if __name__ == '__main__':
