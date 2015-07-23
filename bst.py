@@ -26,6 +26,28 @@ class Node(object):
         right_depth = self.right.depth() if self.right else 0
         return max(left_depth, right_depth) + 1
 
+    def pre_order(self):
+        yield self.val
+        if self.left:
+            for val in self.left.pre_order():
+                yield val
+        if self.right:
+            for val in self.right.pre_order():
+                yield val
+
+    def in_order(self):
+        if not self.left:
+            yield self.val
+        elif self.left:
+            for val in self.left.in_order():
+                yield val
+        elif not self.right:
+            yield self.val
+        elif self.right:
+            for val in self.right.in_order():
+                yield val
+
+
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
         if self.left is not None:
@@ -94,6 +116,12 @@ class BinarySearchTree(object):
         else:
             return self.root.balance()
 
+    def pre_order(self):
+        return self.root.pre_order()
+
+    def in_order(self):
+        return self.root.in_order()
+
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
         return "digraph G{\n%s}" % ("" if self.root is None else (
@@ -110,8 +138,14 @@ if __name__ == '__main__':
     # from cmdline to make a png file containing a visual
     # representation of the tree.
     tree = BinarySearchTree()
-    for i in range(10):
-        tree.insert(random.randint(1, 100))
+    # for i in range(10):
+    # tree.insert(random.randint(1, 100))
+    tree.insert(15)
+    tree.insert(7)
+    tree.insert(20)
+    tree.insert(3)
+    tree.insert(9)
+    tree.insert(2)
     dot_tree = tree.get_dot()
     with open('test.gv', 'w') as fh:
         fh.write(dot_tree)
