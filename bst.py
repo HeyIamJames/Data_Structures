@@ -36,17 +36,13 @@ class Node(object):
                 yield val
 
     def in_order(self):
-        if not self.left:
-            yield self.val
-        elif self.left:
+        if self.left:
             for val in self.left.in_order():
                 yield val
-        elif not self.right:
-            yield self.val
-        elif self.right:
+        yield self.val
+        if self.right:
             for val in self.right.in_order():
                 yield val
-
 
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
