@@ -1,6 +1,6 @@
+from bst import BinarySearchTree, Node
 import pytest
 import random
-from bst import BinarySearchTree, Node
 
 
 @pytest.fixture
@@ -82,6 +82,16 @@ def test_contains_populated(fixed_six_node_bst):
     assert my_tree.contains(8) is False
 
 
+def test_contains():
+    tree = BinarySearchTree()
+    tree.insert(2)
+    tree.insert(4)
+    tree.insert(5)
+    tree.insert(1)
+    assert tree.contains(4) is True
+    assert tree.contains(10) is False
+
+
 def test_size_empty(empty_bst):
     my_tree = empty_bst
     assert my_tree.size() == 0
@@ -92,3 +102,32 @@ def test_size_populated(fixed_six_node_bst):
     assert len(my_tree.set) == 6
     assert my_tree.size() == 6
 
+
+def test_size():
+    tree = BinarySearchTree()
+    tree.insert(2)
+    tree.insert(4)
+    tree.insert(5)
+    tree.insert(1)
+    assert tree.size() != 2
+    assert tree.size() == 4
+
+
+def test_balance():
+    tree = BinarySearchTree()
+    tree.insert(2)
+    tree.insert(4)
+    tree.insert(5)
+    tree.insert(1)
+    assert tree.balance() != 0
+    assert tree.balance() == 1
+
+
+def test_depth():
+    tree = BinarySearchTree()
+    tree.insert(2)
+    tree.insert(4)
+    tree.insert(5)
+    tree.insert(1)
+    assert tree.depth() != 2
+    assert tree.depth() == 3
