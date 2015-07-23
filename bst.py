@@ -112,14 +112,18 @@ if __name__ == '__main__':
     tree = BinarySearchTree()
     for i in range(10):
         tree.insert(random.randint(1, 100))
-    tree2 = BinarySearchTree()
-    for i in range(100):
-        tree.insert(i)
     dot_tree = tree.get_dot()
     with open('test.gv', 'w') as fh:
         fh.write(dot_tree)
-    #worst case
-    print timeit.timeit(tree2.contains(99))
-    #best case
-    print timeit.timeit(tree2.contains(1))
 
+    tree2 = BinarySearchTree()
+    for i in range(100):
+        tree2.insert(i)
+
+    # worst case
+    t = timeit.Timer('tree2.contains(99)', 'from __main__ import tree2')
+    print t.timeit()
+
+    # best case
+    t = timeit.Timer('tree2.contains(1)', 'from __main__ import tree2')
+    print t.timeit()
