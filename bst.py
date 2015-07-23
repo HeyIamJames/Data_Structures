@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import random
 # source of info http://interactivepython.org/runestone/static/pythonds/Trees/bst.html
 
 
@@ -23,15 +24,6 @@ class Node(object):
         left_depth = self.left.depth() if self.left else 0
         right_depth = self.right.depth() if self.right else 0
         return max(left_depth, right_depth) + 1
-
-    def get_dot(self):
-        """return the tree with root 'self' as a dot graph for visualization"""
-        return "digraph G{\n%s}" % ("" if self.val is None else (
-            "\t%s;\n%s\n" % (
-                self.val,
-                "\n".join(self._get_dot())
-            )
-        ))
 
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
@@ -101,9 +93,26 @@ class BinarySearchTree(object):
         else:
             return self.root.balance()
 
+    def get_dot(self):
+        """return the tree with root 'self' as a dot graph for visualization"""
+        return "digraph G{\n%s}" % ("" if self.root is None else (
+            "\t%s;\n%s\n" % (
+                self.root.val,
+                "\n".join(self.root._get_dot())
+            )
+        ))
+
 
 if __name__ == '__main__':
+    # Create a random Binary Search Tree.
+    # Call: dot -Tpng test.gv -o testGraph.png
+    # from cmdline to make a png file containing a visual
+    # representation of the tree.
     tree = BinarySearchTree()
-    tree.insert(5)
-    tree.insert(9)
-    tree.insert(2)
+    for i in range(10):
+        tree.insert(random.randint(1, 100))
+    dot_tree = tree.get_dot()
+    with open('test.gv', 'w') as fh:
+        fh.write(dot_tree)
+
+
