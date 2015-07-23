@@ -114,5 +114,4 @@ if __name__ == '__main__':
     dot_tree = tree.get_dot()
     with open('test.gv', 'w') as fh:
         fh.write(dot_tree)
-
-
+    print dot_tree
