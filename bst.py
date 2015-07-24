@@ -47,7 +47,7 @@ class Node(object):
     def post_order(self):
         "leftmost, left on R, root"
         if self.right:
-            for val in self.right.pre_order():
+            for val in self.right.post_order():
                 yield val
         if self.left:
             for val in self.left.pre_order():
@@ -55,7 +55,9 @@ class Node(object):
         yield self.val
 
     def bredth_first(self):
-        
+        "returns"
+        pass
+
 
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
