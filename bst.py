@@ -37,20 +37,20 @@ class Node(object):
 
     def in_order(self):
         if self.left:
-            for val in self.left.pre_order():
+            for val in self.left.in_order():
                 yield val
         yield self.val
         if self.right:
-            for val in self.right.pre_order():
+            for val in self.right.in_order():
                 yield val
 
     def post_order(self):
         "leftmost, left on R, root"
+        if self.left:
+            for val in self.left.post_order():
+                yield val
         if self.right:
             for val in self.right.post_order():
-                yield val
-        if self.left:
-            for val in self.left.pre_order():
                 yield val
         yield self.val
 
@@ -149,7 +149,6 @@ class BinarySearchTree(object):
         ))
 # dot -Tpng test.gv -o testGraph.png
 
-
 if __name__ == '__main__':
     # Create a random Binary Search Tree.
     # Call: dot -Tpng test.gv -o testGraph.png
@@ -164,6 +163,8 @@ if __name__ == '__main__':
     tree.insert(3)
     tree.insert(9)
     tree.insert(2)
+    tree.insert(4)
+    tree.insert(44)
     dot_tree = tree.get_dot()
     with open('test.gv', 'w') as fh:
         fh.write(dot_tree)
@@ -172,6 +173,9 @@ if __name__ == '__main__':
     for i in range(100):
         tree2.insert(i)
 
+    # dot -Tpng test.gv -o testGraph.png
+    # open testGraph.png
+
     # worst case
     t = timeit.Timer('tree2.contains(99)', 'from __main__ import tree2')
     print t.timeit()
@@ -179,3 +183,20 @@ if __name__ == '__main__':
     # best case
     t = timeit.Timer('tree2.contains(1)', 'from __main__ import tree2')
     print t.timeit()
+
+    #for pre order
+    print "pre order"
+    for i in (tree.pre_order()):
+        print i
+
+    #for in order
+    print "in order:"
+    for i in (tree.in_order()):
+        print i
+
+    #for post order
+    print "post order"
+    for i in (tree.post_order()):
+        print i
+
+    #for bredth
