@@ -58,6 +58,9 @@ class Node(object):
         "returns"
         pass
 
+    def bredth_first(self):
+        "returns"
+        pass
 
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
