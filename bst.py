@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import random
 import timeit
-from que import Queue
+from Queue import Queue
 # source of info http://interactivepython.org/runestone/static/pythonds/Trees/bst.html
 
 
@@ -57,14 +57,14 @@ class Node(object):
 
     def breadth_traversal(self):
         q = Queue()
-        q.enqueue(self)
-        while True:
-            Node = q.dequeue()
-            yield Node.val
-            if Node.left:
-                q.enqueue(Node.left)
-            if Node.right:
-                q.enqueue(Node.right)
+        q.put(self)
+        while q.qsize() != 0:
+            node = q.get()
+            yield node.val
+            if node.left:
+                q.put(node.left)
+            if node.right:
+                q.put(node.right)
 
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
@@ -144,7 +144,7 @@ class BinarySearchTree(object):
         return self.root.post_order()
 
     def breadth_traversal(self):
-        return self.breadth_traversal()
+        return self.root.breadth_traversal()
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
