@@ -96,7 +96,6 @@ def test_size():
     tree.insert(4)
     tree.insert(5)
     tree.insert(1)
-    assert tree.size() != 2
     assert tree.size() == 4
 
 
@@ -116,6 +115,33 @@ def test_depth():
     tree.insert(5)
     tree.insert(1)
     assert tree.depth() == 3
+
+
+def test_pre_order(fixed_eight_node_bst):
+    my_tree = fixed_eight_node_bst
+    expected = [15, 7, 3, 2, 4, 9, 20, 44]
+    actual = []
+    for i in my_tree.pre_order():
+        actual.append(i)
+    assert expected == actual
+
+
+def test_in_order(fixed_eight_node_bst):
+    my_tree = fixed_eight_node_bst
+    expected = [2, 3, 4, 7, 9, 15, 20, 44]
+    actual = []
+    for i in my_tree.in_order():
+        actual.append(i)
+    assert expected == actual
+
+
+def test_post_order(fixed_eight_node_bst):
+    my_tree = fixed_eight_node_bst
+    expected = [2, 4, 3, 9, 7, 44, 20, 15]
+    actual = []
+    for i in my_tree.post_order():
+        actual.append(i)
+    assert expected == actual
 
 
 def test_breadth_first_empty(empty_bst):
