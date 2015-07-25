@@ -20,15 +20,18 @@ def fixed_six_node_bst():
     return tree
 
 
-# @pytest.fixture
-# def random_ten_node_bst():
-#     tree = BinarySearchTree()
-#     my_set = set()
-#     for i in range(10):
-#         r = random.randint(1, 50)
-#         tree.insert(r)
-#         my_set.add(r)
-#     return (tree, my_set)
+@pytest.fixture
+def fixed_eight_node_bst():
+    tree = BinarySearchTree()
+    tree.insert(15)
+    tree.insert(7)
+    tree.insert(20)
+    tree.insert(3)
+    tree.insert(9)
+    tree.insert(2)
+    tree.insert(4)
+    tree.insert(44)
+    return tree
 
 
 def test_insert_empty_tree(empty_bst):
@@ -82,25 +85,9 @@ def test_contains_populated(fixed_six_node_bst):
     assert my_tree.contains(8) is False
 
 
-def test_contains():
-    tree = BinarySearchTree()
-    tree.insert(2)
-    tree.insert(4)
-    tree.insert(5)
-    tree.insert(1)
-    assert tree.contains(4) is True
-    assert tree.contains(10) is False
-
-
 def test_size_empty(empty_bst):
     my_tree = empty_bst
     assert my_tree.size() == 0
-
-
-def test_size_populated(fixed_six_node_bst):
-    my_tree = fixed_six_node_bst
-    assert len(my_tree.set) == 6
-    assert my_tree.size() == 6
 
 
 def test_size():
@@ -119,7 +106,6 @@ def test_balance():
     tree.insert(4)
     tree.insert(5)
     tree.insert(1)
-    assert tree.balance() != 0
     assert tree.balance() == 1
 
 
@@ -129,5 +115,19 @@ def test_depth():
     tree.insert(4)
     tree.insert(5)
     tree.insert(1)
-    assert tree.depth() != 2
     assert tree.depth() == 3
+
+
+def test_breadth_first_empty(empty_bst):
+    my_tree = empty_bst
+    with pytest.raises(AttributeError):
+        my_tree.breadth_traversal()
+
+
+def test_breadth_first_populated(fixed_eight_node_bst):
+    my_tree = fixed_eight_node_bst
+    expected = [15, 7, 20, 3, 9, 44, 2, 4]
+    actual = []
+    for i in my_tree.breadth_traversal():
+        actual.append(i)
+    assert expected == actual
