@@ -19,16 +19,18 @@ def fixed_six_node_bst():
     tree.insert(2)
     return tree
 
-
-# @pytest.fixture
-# def random_ten_node_bst():
-#     tree = BinarySearchTree()
-#     my_set = set()
-#     for i in range(10):
-#         r = random.randint(1, 50)
-#         tree.insert(r)
-#         my_set.add(r)
-#     return (tree, my_set)
+@pytest.fixture
+def fixed_eight_node_bst():
+    tree = BinarySearchTree()
+    tree.insert(15)
+    tree.insert(7)
+    tree.insert(20)
+    tree.insert(3)
+    tree.insert(9)
+    tree.insert(2)
+    tree.insert(4)
+    tree.insert(44)
+    return tree
 
 
 def test_insert_empty_tree(empty_bst):
@@ -131,3 +133,40 @@ def test_depth():
     tree.insert(1)
     assert tree.depth() != 2
     assert tree.depth() == 3
+
+
+def test_pre_order(fixed_eight_node_bst):
+    my_tree = fixed_eight_node_bst
+    expected = [15, 7, 3, 2, 4, 9, 20, 44]
+    actual = []
+    for i in my_tree.pre_order():
+        actual.append(i)
+    assert expected == actual
+
+
+def test_in_order(fixed_eight_node_bst):
+    my_tree = fixed_eight_node_bst
+    expected = [2, 3, 4, 7, 9, 15, 20, 44]
+    actual = []
+    for i in my_tree.in_order():
+        actual.append(i)
+    assert expected == actual
+
+
+def test_post_order(fixed_eight_node_bst):
+    my_tree = fixed_eight_node_bst
+    expected = [2, 4, 3, 9, 7, 44, 20, 15]
+    actual = []
+    for i in my_tree.post_order():
+        actual.append(i)
+    assert expected == actual
+
+
+def test_breadth_first_populated(fixed_eight_node_bst):
+    my_tree = fixed_eight_node_bst
+    expected = [15, 7, 20, 3, 9, 44, 2, 4]
+    actual = []
+    for i in my_tree.breadth_traversal():
+        actual.append(i)
+    assert expected == actual
+
