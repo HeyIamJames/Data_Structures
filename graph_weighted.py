@@ -143,6 +143,7 @@ class Graph(object):
 
         return path, path_weight
 
+
 if __name__ == '__main__':
     x = Graph()
     x.add_node(1)
