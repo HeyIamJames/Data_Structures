@@ -27,6 +27,25 @@ class Node(object):
         right_depth = self.right.depth() if self.right else 0
         return max(left_depth, right_depth) + 1
 
+    def del_node(self):
+        if self.left.child is None:
+            self.left = self
+        else:
+            return None
+
+    def find_node(self, val):
+        if val < self.val:
+            if self.left is None:
+                return None
+            return self.left.find_node(val)
+        elif val > self.val:
+            if self.right is None:
+                return None
+            return self.right.find_node(val)
+        else:
+            return self
+
+
     def pre_order(self):
         yield self.val
         if self.left:
@@ -145,6 +164,10 @@ class BinarySearchTree(object):
 
     def breadth_traversal(self):
         return self.root.breadth_traversal()
+
+    def find_node(self, val):
+        return self.root.find_node(val)
+
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
