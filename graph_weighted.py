@@ -24,7 +24,7 @@ class Graph(object):
         edges = []
         for key, values in self.graph.iteritems():
             for node in values:
-                    edges.append((key, node))
+                    edges.append((key, node[0]))
         return edges
 
     def add_node(self, node):
@@ -37,9 +37,9 @@ class Graph(object):
         """
         Creats an edge between two nodes with a weight.
         """
-        if node1 not in self.graph:
+        if not self.graph.has_key(node1):
             self.add_node(node1)
-        if node2 not in self.graph:
+        if not self.graph.has_key(node1):
             self.add_node(node2)
         self.graph[node1].append((node2, weight))
 
@@ -77,20 +77,22 @@ class Graph(object):
 
     def neighbors(self, node):
         """
-        Finds the adjacent edges for a given node.
+        Return the edges for a node in a list
         """
-        if node in self.graph:
-            return self.graph[node]
-        else:
-            raise KeyError('Node not in graph.')
+        try:
+            edges = [node[0] for node in self.graph[node]]
+            return edges
+        except KeyError:
+            raise IndexError("Node not in Graph.")
 
     def adjacent(self, node1, node2):
         """
-        Finds an edge between two nodees
+        Return if an edge exist between two nodes
         """
-        if node1 not in self.graph or node2 not in self.graph:
-            raise IndexError('Node does not exist')
-        return node2 in self.graph[node1]
+        try:
+            return node2 in self.neighbors(node1)
+        except KeyError:
+            raise IndexError("Node not in Graph.")
 
     def depth_first_traversal(self, start):
         """Returns a depth first traversal path as a list.
@@ -143,3 +145,15 @@ class Graph(object):
 
 if __name__ == '__main__':
     x = Graph()
+    x.add_node(1)
+    x.add_node(2)
+    x.add_node(3)
+    x.add_node(4)
+    x.add_node(5)
+    x.add_node(6)
+    x.nodes()
+    x.add_edge(1, 2, 10)
+    x.add_edge(2, 3, 11)
+    x.add_edge(2, 5, 0)
+    x.add_edge(5, 6, 1)
+    x.add_edge(4, 5, 90)
