@@ -55,7 +55,23 @@ class Node(object):
                 node.parent.left = None
             else:
                 node.parent.right = None
-            del node
+            return node.val
+        if node.left and not node.right:
+            if node.val < node.parent.val:
+                node.left.parent = node.parent
+                node.parent.left = node.left
+            else:
+                node.left.parent = node.parent
+                node.parent.right = node.left
+            return node.val
+        if not node.left and node.right:
+            if node.val < node.parent.val:
+                node.right.parent = node.parent
+                node.parent.left = node.right
+            else:
+                node.right.parent = node.parent
+                node.parent.right = node.right
+            return node.val
 
     def pre_order(self):
         yield self.val
@@ -177,10 +193,12 @@ class BinarySearchTree(object):
         return self.root.breadth_traversal()
 
     def find_node(self, val):
-        return self.root.find_node(val)
+        return self.root._find_node(val)
 
     def delete(self, val):
-        return self.root.delete()
+        # node = self.root.delete(val)
+        # self.set.remove(node)
+        return self.root.delete(val)
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
@@ -205,7 +223,7 @@ if __name__ == '__main__':
     tree.insert(20)
     tree.insert(3)
     tree.insert(9)
-    tree.insert(2)
+    # tree.insert(2)
     tree.insert(4)
     tree.insert(44)
     dot_tree = tree.get_dot()
