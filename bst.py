@@ -33,18 +33,29 @@ class Node(object):
         else:
             return None
 
-    def find_node(self, val):
+    def _find_node(self, val):
         if val < self.val:
             if self.left is None:
                 return None
-            return self.left.find_node(val)
+            return self.left._find_node(val)
         elif val > self.val:
             if self.right is None:
                 return None
-            return self.right.find_node(val)
+            return self.right._find_node(val)
         else:
             return self
 
+    def _successor(self, val):
+        pass
+
+    def delete(self, val):
+        node = self._find_node(val)
+        if not node.left and not node.right:
+            if node.val < node.parent.val:
+                node.parent.left = None
+            else:
+                node.parent.right = None
+            del node
 
     def pre_order(self):
         yield self.val
@@ -168,6 +179,8 @@ class BinarySearchTree(object):
     def find_node(self, val):
         return self.root.find_node(val)
 
+    def delete(self, val):
+        return self.root.delete()
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
