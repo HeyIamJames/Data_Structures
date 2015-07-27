@@ -157,4 +157,3 @@ if __name__ == '__main__':
     x.add_edge(2, 5, 0)
     x.add_edge(5, 6, 1)
     x.add_edge(4, 5, 90)
-
