@@ -12,7 +12,7 @@ class BinaryHeap:
         i = len(self.heapList) - 1
         while i // 2 > 0:
             if self.heapList[i] < self.heapList[i // 2]:
-                self.heapList[i], self.heapList[i//2] = self.heapList[i//2], self.heapList[i]
+                self.heapList[i], self.heapList[i // 2] = self.heapList[i // 2], self.heapList[i]
             i = i // 2
 
     def restructure2(self):
@@ -20,21 +20,18 @@ class BinaryHeap:
         i = 1
         while True:
             try:
-                lchild, rchild = i*2,(i*2)+1
-                #if left child is more then parent --and-- left child is more then or equal to right child
+                lchild, rchild = i * 2, (i * 2) + 1
                 if self.heapList[lchild] < self.heapList[i] and self.heapList[lchild] <= self.heaplist[rchild]:
                     self.heapList[i], self.heapList[lchild] = self.heapList[lchild], self.heapList[i]
                     i = i * 2
-                #if right child is more then parent --and-- right child is more then to left child
-                elif self.heapList[rchild] < self.heapList[i] and self.heapList[rchild] < self.heaplist[lchild]::
+                elif self.heapList[rchild] < self.heapList[i] and self.heapList[rchild] < self.heaplist[lchild]:
                     self.heapList[i], self.heapList[lchild] = self.heapList[lchild], self.heapList[i]
                     i = (i * 2) + 1
-                #nither are more then parent
                 else:
                     break
             except IndexError:
                 break
-            
+
     def push(self, k):
         """puts number k on the data tree and then restructures"""
         self.heapList.append(k)
