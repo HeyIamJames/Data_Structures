@@ -49,11 +49,11 @@ class Node(object):
         """if val is greater than parent, grab the node on the child right who has no left child
         if val is less than parent, grab the node on the right whos left child has no right child
         """
-        val = self._find_node(val)
-        if valval > self.val.parent:
-            return self.child.left of first child.right =None
-        if val < self.val.parent
-            return self.child.right of first child.left = None 
+        # val = self._find_node(val)
+        # if valval > self.val.parent:
+        #     return self.child.left of first child.right =None
+        # if val < self.val.parent
+        #     return self.child.right of first child.left = None 
 
 
     def delete(self, val):
@@ -83,12 +83,12 @@ class Node(object):
                 node.parent.right = node.right
             return node.val
         #if 2 childs
-        if node.left and node.right:
-            if node.val < node.parent.val:
-                node.parent.left = self.post_order()
-            if node.val < node.parent.val:
-                node.parent.right = self.pre_order()
-                #ignore above for now
+        # if node.left and node.right:
+        #     if node.val < node.parent.val:
+        #         node.parent.left = self.post_order()
+        #     if node.val < node.parent.val:
+        #         node.parent.right = self.pre_order()
+        #         #ignore above for now
 
     def pre_order(self):
         yield self.val
