@@ -34,6 +34,27 @@ def fixed_eight_node_bst():
     return tree
 
 
+def test_delete_node_0_child(fixed_eight_node_bst):
+    tree = fixed_eight_node_bst
+    assert tree.root.right.right.val == 44
+    tree.delete(44)
+    # assert tree.root._find_node(44) == 
+    assert tree.root.right.right.val == None
+
+
+def test_delete_node_1_child(fixed_eight_node_bst):
+    tree = fixed_eight_node_bst
+    tree.delete(20)
+    assert tree.root.right.val == 44
+
+
+def test_delete_node_2_child(fixed_eight_node_bst):
+    tree = fixed_eight_node_bst
+    tree.delete(3)
+    assert tree.root.left.left.val == 4
+    assert tree.root.left.left.left.val == 2
+
+
 def test_insert_empty_tree(empty_bst):
     my_tree = empty_bst
     my_tree.insert(random.randint(1, 10))
