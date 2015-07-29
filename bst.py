@@ -27,12 +27,6 @@ class Node(object):
         right_depth = self.right.depth() if self.right else 0
         return max(left_depth, right_depth) + 1
 
-    def del_node(self):
-        if self.left.child is None:
-            self.left = self
-        else:
-            return None
-
     def _find_node(self, val):
         if val < self.val:
             if self.left is None:
@@ -44,20 +38,6 @@ class Node(object):
             return self.right._find_node(val)
         else:
             return self
-
-    def _children(self, node):
-        count = 0
-        if node.left:
-            count += 1
-        if node.right:
-            count += 1
-        return count
-
-    def _is_leaf(self, node):
-        return node.left and node.right
-
-    def _successor(self, val):
-        pass
 
     def delete(self, val):
         node = self._find_node(val)
@@ -215,7 +195,6 @@ class BinarySearchTree(object):
     def delete(self, val):
         val = self.root.delete(val)
         self.set.remove(val)
-        # return self.root.delete(val)
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
@@ -277,7 +256,7 @@ if __name__ == '__main__':
     for i in (tree.post_order()):
         print i
 
-    # for bredth
+    # for breadth
     print "breadth traversal"
     for i in (tree.breadth_traversal()):
         print i
