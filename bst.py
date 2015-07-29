@@ -195,6 +195,7 @@ class BinarySearchTree(object):
     def delete(self, val):
         val = self.root.delete(val)
         self.set.remove(val)
+        return None
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""

@@ -38,21 +38,32 @@ def test_delete_node_0_child(fixed_eight_node_bst):
     tree = fixed_eight_node_bst
     assert tree.root.right.right.val == 44
     tree.delete(44)
-    # assert tree.root._find_node(44) == 
-    assert tree.root.right.right.val == None
+    assert tree.root.right.right is None
+    assert 44 not in tree.set
 
 
 def test_delete_node_1_child(fixed_eight_node_bst):
     tree = fixed_eight_node_bst
     tree.delete(20)
     assert tree.root.right.val == 44
+    assert tree.root.right.parent.val == 15
+    assert 20 not in tree.set
 
 
 def test_delete_node_2_child(fixed_eight_node_bst):
     tree = fixed_eight_node_bst
     tree.delete(3)
-    assert tree.root.left.left.val == 4
-    assert tree.root.left.left.left.val == 2
+    assert tree.root.left.left.val == 2
+    assert tree.root.left.left.parent.val == 7
+    assert tree.root.left.left.left is None
+    assert tree.root.left.left.right.val == 4
+    assert 3 not in tree.set
+
+
+def test_delete_empty_tree(empty_bst):
+    tree = empty_bst
+    with pytest.raises(AttributeError):
+        tree.delete(7)
 
 
 def test_insert_empty_tree(empty_bst):
