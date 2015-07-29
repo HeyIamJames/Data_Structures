@@ -15,12 +15,9 @@ class Node(object):
         self.parent = parent
 
     def balance(self):
-        if self.right.depth() > self.left.depth():
-            return 1
-        elif self.left.depth() > self.right.depth():
-            return -1
-        else:
-            return 0
+        left_depth = self.left.depth() if self.left else 0
+        right_depth = self.right.depth() if self.right else 0
+        return left_depth - right_depth
 
     def depth(self):
         left_depth = self.left.depth() if self.left else 0
@@ -216,12 +213,13 @@ if __name__ == '__main__':
     # for i in range(10):
     # tree.insert(random.randint(1, 100))
     tree.insert(15)
-    tree.insert(7)
+    # tree.insert(7)
     tree.insert(20)
-    tree.insert(3)
-    tree.insert(9)
-    tree.insert(2)
-    tree.insert(4)
+    # tree.insert(3)
+    # tree.insert(9)
+    # tree.insert(2)
+    # tree.insert(1)
+    # tree.insert(4)
     tree.insert(44)
     dot_tree = tree.get_dot()
     with open('test.gv', 'w') as fh:
