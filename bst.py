@@ -14,6 +14,16 @@ class Node(object):
         self.right = right
         self.parent = parent
 
+    def rebalance(self):
+        if self.balance => 1:
+            self.right_rotation()
+            #check if LL, LR > 2 right rotations > 3 right rotations
+        if self.balance =< -1:
+            self.left_rotation()
+            #check if RR, RL > 2 left rotations > 3 left rotations
+        else: 
+            #del all nodes from where > node l or r > l or r depth by 1 and re add
+
     def balance(self):
         if self.right.depth() > self.left.depth():
             return 1
