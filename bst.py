@@ -45,33 +45,50 @@ class Node(object):
         else:
             return self
 
+    def _children(self, node):
+        count = 0
+        if node.left:
+            count += 1
+        if node.right:
+            count += 1
+        return count
+
+    def _is_leaf(self, node):
+        return node.left and node.right
+
     def _successor(self, val):
         pass
 
     def delete(self, val):
         node = self._find_node(val)
-        if not node.left and not node.right:
-            if node.val < node.parent.val:
-                node.parent.left = None
+        desc = node.left
+        if desc:
+            # if node's left child has right child
+            # remove link from parent of rightmost node to rightmost node
+            # switch desc with node, starting by setting node's
+            # left child's parent to desc and desc's left to node's left
+            if desc.right:
+                while desc.right:
+                    desc = desc.right
+                desc.parent.right = None
+                node.left.parent = desc
+                desc.left = node.left
+            # set parent and right of desc to node's parent and right
+            desc.parent = node.parent
+            desc.right = node.right
+            # if node.right is not None, set node.right's parent equal to desc
+            if node.right:
+                node.right.parent = desc
+        else:
+            desc = node.right
+            if desc:
+                desc.parent = node.parent
+        if node.parent:
+            if node == node.parent.right:
+                node.parent.right = desc
             else:
-                node.parent.right = None
-            return node.val
-        if node.left and not node.right:
-            if node.val < node.parent.val:
-                node.left.parent = node.parent
-                node.parent.left = node.left
-            else:
-                node.left.parent = node.parent
-                node.parent.right = node.left
-            return node.val
-        if not node.left and node.right:
-            if node.val < node.parent.val:
-                node.right.parent = node.parent
-                node.parent.left = node.right
-            else:
-                node.right.parent = node.parent
-                node.parent.right = node.right
-            return node.val
+                node.parent.left = desc
+        return node.val
 
     def pre_order(self):
         yield self.val
@@ -196,9 +213,9 @@ class BinarySearchTree(object):
         return self.root._find_node(val)
 
     def delete(self, val):
-        # node = self.root.delete(val)
-        # self.set.remove(node)
-        return self.root.delete(val)
+        val = self.root.delete(val)
+        self.set.remove(val)
+        # return self.root.delete(val)
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
@@ -223,7 +240,7 @@ if __name__ == '__main__':
     tree.insert(20)
     tree.insert(3)
     tree.insert(9)
-    # tree.insert(2)
+    tree.insert(2)
     tree.insert(4)
     tree.insert(44)
     dot_tree = tree.get_dot()
