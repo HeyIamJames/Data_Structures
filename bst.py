@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import random
 import timeit
 from Queue import Queue
-# source of info http://interactivepython.org/runestone/static/pythonds/Trees/bst.html
+# source http://interactivepython.org/runestone/static/pythonds/Trees/bst.html
 
 
 class Node(object):
@@ -26,6 +26,49 @@ class Node(object):
         left_depth = self.left.depth() if self.left else 0
         right_depth = self.right.depth() if self.right else 0
         return max(left_depth, right_depth) + 1
+
+    def _find_node(self, val):
+        if val < self.val:
+            if self.left is None:
+                return None
+            return self.left._find_node(val)
+        elif val > self.val:
+            if self.right is None:
+                return None
+            return self.right._find_node(val)
+        else:
+            return self
+
+    def delete(self, val):
+        node = self._find_node(val)
+        desc = node.left
+        if desc:
+            # if node's left child has right child
+            # remove link from parent of rightmost node to rightmost node
+            # switch desc with node, starting by setting node's
+            # left child's parent to desc and desc's left to node's left
+            if desc.right:
+                while desc.right:
+                    desc = desc.right
+                desc.parent.right = None
+                node.left.parent = desc
+                desc.left = node.left
+            # set parent and right of desc to node's parent and right
+            desc.parent = node.parent
+            desc.right = node.right
+            # if node.right is not None, set node.right's parent equal to desc
+            if node.right:
+                node.right.parent = desc
+        else:
+            desc = node.right
+            if desc:
+                desc.parent = node.parent
+        if node.parent:
+            if node == node.parent.right:
+                node.parent.right = desc
+            else:
+                node.parent.left = desc
+        return node.val
 
     def pre_order(self):
         yield self.val
@@ -146,6 +189,14 @@ class BinarySearchTree(object):
     def breadth_traversal(self):
         return self.root.breadth_traversal()
 
+    def find_node(self, val):
+        return self.root._find_node(val)
+
+    def delete(self, val):
+        val = self.root.delete(val)
+        self.set.remove(val)
+        return None
+
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
         return "digraph G{\n%s}" % ("" if self.root is None else (
@@ -206,7 +257,7 @@ if __name__ == '__main__':
     for i in (tree.post_order()):
         print i
 
-    # for bredth
+    # for breadth
     print "breadth traversal"
     for i in (tree.breadth_traversal()):
         print i
