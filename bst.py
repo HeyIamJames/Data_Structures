@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 import random
 import timeit
-# source of info http://interactivepython.org/runestone/static/pythonds/Trees/bst.html
+from Queue import Queue
+# source http://interactivepython.org/runestone/static/pythonds/Trees/bst.html
 
 
 class Node(object):
@@ -26,6 +27,49 @@ class Node(object):
         right_depth = self.right.depth() if self.right else 0
         return max(left_depth, right_depth) + 1
 
+    def _find_node(self, val):
+        if val < self.val:
+            if self.left is None:
+                return None
+            return self.left._find_node(val)
+        elif val > self.val:
+            if self.right is None:
+                return None
+            return self.right._find_node(val)
+        else:
+            return self
+
+    def delete(self, val):
+        node = self._find_node(val)
+        desc = node.left
+        if desc:
+            # if node's left child has right child
+            # remove link from parent of rightmost node to rightmost node
+            # switch desc with node, starting by setting node's
+            # left child's parent to desc and desc's left to node's left
+            if desc.right:
+                while desc.right:
+                    desc = desc.right
+                desc.parent.right = None
+                node.left.parent = desc
+                desc.left = node.left
+            # set parent and right of desc to node's parent and right
+            desc.parent = node.parent
+            desc.right = node.right
+            # if node.right is not None, set node.right's parent equal to desc
+            if node.right:
+                node.right.parent = desc
+        else:
+            desc = node.right
+            if desc:
+                desc.parent = node.parent
+        if node.parent:
+            if node == node.parent.right:
+                node.parent.right = desc
+            else:
+                node.parent.left = desc
+        return node.val
+
     def pre_order(self):
         yield self.val
         if self.left:
@@ -36,17 +80,34 @@ class Node(object):
                 yield val
 
     def in_order(self):
-        if not self.left:
-            yield self.val
-        elif self.left:
+        if self.left:
             for val in self.left.in_order():
                 yield val
-        elif not self.right:
-            yield self.val
-        elif self.right:
+        yield self.val
+        if self.right:
             for val in self.right.in_order():
                 yield val
 
+    def post_order(self):
+        "leftmost, left on R, root"
+        if self.left:
+            for val in self.left.post_order():
+                yield val
+        if self.right:
+            for val in self.right.post_order():
+                yield val
+        yield self.val
+
+    def breadth_traversal(self):
+        q = Queue()
+        q.put(self)
+        while q.qsize() != 0:
+            node = q.get()
+            yield node.val
+            if node.left:
+                q.put(node.left)
+            if node.right:
+                q.put(node.right)
 
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
@@ -122,6 +183,20 @@ class BinarySearchTree(object):
     def in_order(self):
         return self.root.in_order()
 
+    def post_order(self):
+        return self.root.post_order()
+
+    def breadth_traversal(self):
+        return self.root.breadth_traversal()
+
+    def find_node(self, val):
+        return self.root._find_node(val)
+
+    def delete(self, val):
+        val = self.root.delete(val)
+        self.set.remove(val)
+        return None
+
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
         return "digraph G{\n%s}" % ("" if self.root is None else (
@@ -146,6 +221,8 @@ if __name__ == '__main__':
     tree.insert(3)
     tree.insert(9)
     tree.insert(2)
+    tree.insert(4)
+    tree.insert(44)
     dot_tree = tree.get_dot()
     with open('test.gv', 'w') as fh:
         fh.write(dot_tree)
@@ -154,6 +231,9 @@ if __name__ == '__main__':
     for i in range(100):
         tree2.insert(i)
 
+    # dot -Tpng test.gv -o testGraph.png
+    # open testGraph.png
+
     # worst case
     t = timeit.Timer('tree2.contains(99)', 'from __main__ import tree2')
     print t.timeit()
@@ -161,3 +241,23 @@ if __name__ == '__main__':
     # best case
     t = timeit.Timer('tree2.contains(1)', 'from __main__ import tree2')
     print t.timeit()
+
+    # for pre order
+    print "pre order"
+    for i in (tree.pre_order()):
+        print i
+
+    # for in order
+    print "in order:"
+    for i in (tree.in_order()):
+        print i
+
+    # for post order
+    print "post order"
+    for i in (tree.post_order()):
+        print i
+
+    # for breadth
+    print "breadth traversal"
+    for i in (tree.breadth_traversal()):
+        print i

@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+
 class Node(object):
     """Creates a node"""
     def __init__(self, value=None, nextNode=None, prevNode=None):
@@ -43,7 +47,7 @@ class DoubleLinkedList(object):
     def pop(self):
         """
         pop method:
-           removes the value at the head of the list and returns it
+           Removes the value at the head of the list and returns it
         """
         node = self.first
         self.first = self.first.nextNode
@@ -76,7 +80,7 @@ class DoubleLinkedList(object):
         while node.value != val:
             node = node.nextNode
             if node is None:
-                raise ValueError(repr(val) + " is not present in DoublyLinkedList")
+                raise ValueError(repr(val) + "Val not in DoublyLinkedList")
         node.nextNode.prefNode = node.prevNode
         node.prevNode.nextNode = node.nextNode
         self._size -= 1
