@@ -76,7 +76,7 @@ class DoubleLinkedList(object):
         while node.value != val:
             node = node.nextNode
             if node is None:
-                raise ValueError(repr(val) + " is not present in DoublyLinkedList")
+                raise ValueError(repr(val) + "Val not in DoublyLinkedList")
         node.nextNode.prefNode = node.prevNode
         node.prevNode.nextNode = node.nextNode
         self._size -= 1
