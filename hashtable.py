@@ -1,6 +1,6 @@
+
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from termcolor import colored
 """
 sources:
@@ -28,7 +28,7 @@ class HashTable:
         """return value of key"""
         hash_key = self.hash(key)
         bucket = self.hashtable[hash_key]
-        for item in reversed(bucket):
+        for item in (bucket):
             if item[0] == key:
                 return item[1]
 
@@ -54,13 +54,13 @@ class HashTable:
 
 
 if __name__ == '__main__':
-    x = Hash_table(16)
+    x = HashTable(16)
     x.set('k', 20)
     x.set('s', 7)
     x.set('j', 99)
     x.set('o', 12)
-    print x.get_key('k')
-    print x.get_key('j')
+    print x.get('k')
+    print x.get('j')
     print x.hash('k')
     print x.contents()
 
