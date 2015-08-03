@@ -28,7 +28,7 @@ class HashTable:
         """return value of key"""
         hash_key = self.hash(key)
         bucket = self.hashtable[hash_key]
-        for item in (bucket):
+        for item in reversed(bucket):
             if item[0] == key:
                 return item[1]
 
