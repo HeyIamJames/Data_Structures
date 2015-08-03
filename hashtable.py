@@ -1,6 +1,3 @@
-
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from termcolor import colored
 """
 sources:
@@ -47,7 +44,7 @@ class HashTable:
             if i:
                 print colored("[", "red")
                 for x in i:
-                    print "(", colored(x[0], 'green'), ",", colored(x[1], 'blue'), ")"
+                    print "(", colored(x[0], 'green'), ",", colored(x[1], 'blue'),")"
                 print colored("]", "red")
             else:
                 print colored(i, "red")
@@ -63,4 +60,3 @@ if __name__ == '__main__':
     print x.get('j')
     print x.hash('k')
     print x.contents()
-
