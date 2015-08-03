@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from termcolor import colored
 """
 sources:
@@ -7,7 +10,7 @@ http://www.quora.com/How-do-I-create-my-own-Hash-Table-implementation-in-Python
 """
 
 
-class Hash_table:
+class HashTable:
     def __init__(self, size):
         '''hashtable utilizing chaining'''
         self.size = size
@@ -21,11 +24,11 @@ class Hash_table:
         hashing_algorithm = hashing_value % self.size
         return hashing_algorithm
 
-    def get_key(self, key):
+    def get(self, key):
         """return value of key"""
         hash_key = self.hash(key)
         bucket = self.hashtable[hash_key]
-        for item in bucket:
+        for item in reversed(bucket):
             if item[0] == key:
                 return item[1]
 
@@ -37,7 +40,7 @@ class Hash_table:
         else:
             raise TypeError('non-string provided')
 
-    #debugging tool
+    # debugging tool
     def contents(self):
         """returns key/values of hash table"""
         for i in self.hashtable:
