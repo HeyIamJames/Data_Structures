@@ -1,16 +1,7 @@
 from __future__ import print_function
 import random
+import timeit
 
-def selection_sort(list):
-    for i in range(len(list)):
-        x = i
-        for scan_pos in range(i + 1, len(list)):
-            if list[scan_pos] < list[x]:
-                x = scan_pos
-        temp = list[x]
-        list[x] = list[i]
-        list[i] = temp
- 
 def print_list(list):
     for item in list:
         print("{:3}".format(item), end="")
@@ -20,9 +11,6 @@ list = []
 for i in range(10):
     list.append(random.randrange(100))
 
-print_list(list)
-selection_sort(list)
-print_list(list)
 
 def insertion_sort(list):
     for i in range(1, len(list)):
@@ -41,3 +29,14 @@ print_list(list)
 insertion_sort(list)
 print_list(list)
 
+
+def test():
+    x = []
+    for i in range(10):
+        x.append(random.randrange(100))
+    insertion_sort(x)
+
+
+if __name__ == '__main__':
+    import timeit
+    print(timeit.timeit('test()', setup='from __main__ import test'))
