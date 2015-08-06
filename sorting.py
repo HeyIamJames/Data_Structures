@@ -26,7 +26,7 @@ insertion_sort(list)
 print_list(list)
 
 
-def test_worst():
+def test_bad():
     x = []
     for i in range(10):
         x.append(random.randrange(100))
@@ -37,7 +37,8 @@ def test_best():
     x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     insertion_sort(x)
 
+
 if __name__ == '__main__':
     import timeit
-    print(timeit.timeit('test_worst()', setup='from __main__ import test_worst'))
+    print(timeit.timeit('test_bad()', setup='from __main__ import test_bad'))
     print(timeit.timeit('test_best()', setup='from __main__ import test_best'))
