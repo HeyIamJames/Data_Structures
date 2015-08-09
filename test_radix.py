@@ -19,17 +19,25 @@ def test_empty():
     assert x == y
 
 
-def tset_reversed():
+def test_reversed():
     x = []
     for i in range(1, 10):
         x.append(i)
-    y = reversed(x)
-    z = radixsort(y)
+    y = []
+    for i in reversed(x):
+        y.append(i)
+    radixsort(y)
+    z = y
     assert z == x
 
 
 def test_ordered():
-    pass
+    x = []
+    for i in range(1, 10):
+        x.append(i)
+    radixsort(x)
+    z = x
+    assert z == x
 
 
 def test_string():
@@ -37,4 +45,10 @@ def test_string():
         radixsort('cat')
 
 
+def test_badinput():
+    with pytest.raises(TypeError):
+        radixsort('bad', 123, [6, 7], ('hi', 2))
+        
+
 #test non valid inputs,different lengths of integers, already sorted
+# py.test -q test_radix.py
