@@ -40,5 +40,5 @@ def test_best():
 
 if __name__ == '__main__':
     import timeit
-    print(timeit.timeit('test_bad()', setup='from __main__ import test_bad'))
-    print(timeit.timeit('test_best()', setup='from __main__ import test_best'))
+    print(timeit.timeit('test_bad()', setup='from __main__ import test_bad', number=1))
+    print(timeit.timeit('test_best()', setup='from __main__ import test_best', number=1))
