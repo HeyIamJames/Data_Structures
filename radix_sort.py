@@ -30,13 +30,6 @@ def radixsort(_list):
         placement *= slots
 
 
-x = []
-for i in range(10):
-    x.append(random.randrange(100))
-
-y = [3, 123.2, 32, 5]
-
-
 def test_bad():
     x = []
     for i in range(10):

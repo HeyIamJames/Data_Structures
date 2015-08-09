@@ -40,6 +40,14 @@ def test_ordered():
     assert z == x
 
 
+def test_various_length():
+    x = [1, 200, 600, 1234567, 99999, 7]
+    radixsort(x)
+    y = x
+    expected = [1, 7, 200, 600, 99999, 1234567]
+    assert expected == y
+
+
 def test_string():
     with pytest.raises(ValueError):
         radixsort('cat')
@@ -48,7 +56,3 @@ def test_string():
 def test_badinput():
     with pytest.raises(TypeError):
         radixsort('bad', 123, [6, 7], ('hi', 2))
-        
-
-#test non valid inputs,different lengths of integers, already sorted
-# py.test -q test_radix.py
