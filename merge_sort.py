@@ -1,5 +1,4 @@
-from timeit import timeit
-from random import shuffle
+import random
 
 
 def mergesort(l):
@@ -25,3 +24,21 @@ def merge(left, right):
     merged.extend(left[i:])
     merged.extend(right[j:])
     return merged
+
+
+def test_bad():
+    x = []
+    for i in range(10):
+        x.append(random.randrange(100))
+    mergesort(x)
+
+
+def test_best():
+    x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    mergesort(x)
+
+
+if __name__ == '__main__':
+    import timeit
+    print(timeit.timeit('test_bad()', setup='from __main__ import test_bad', number=1))
+    print(timeit.timeit('test_best()', setup='from __main__ import test_best', number=1))
