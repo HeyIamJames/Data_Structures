@@ -1,21 +1,14 @@
-from __future__ import print_function
 import random
 
 
-def insertion_sort(L):
-    for i in range(1, len(L)):
-        key_value = L[i]
+def insertion_sort(l):
+    for i in range(1, len(l)):
+        key_value = l[i]
         scan_pos = i - 1
-        while (scan_pos >= 0) and (L[scan_pos] > key_value):
-            L[scan_pos + 1] = L[scan_pos]
+        while (scan_pos >= 0) and (l[scan_pos] > key_value):
+            l[scan_pos + 1] = l[scan_pos]
             scan_pos = scan_pos - 1
-        L[scan_pos + 1] = key_value
-
-
-def print_list(L):
-    for item in L:
-        print("{:3}".format(item), end="")
-    print()
+        l[scan_pos + 1] = key_value
 
 
 def test_bad():
