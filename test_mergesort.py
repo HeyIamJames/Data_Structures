@@ -17,3 +17,20 @@ def test_repeating_list():
     repeating = [4] * 30
     assert mergesort(repeating) == [4] * 30
 
+
+def test_sorted_list():
+    presorted = range(30)
+    assert mergesort(presorted) == presorted
+
+
+def test_reversed_sorted():
+    backwards_sort = range(30, -1, -1)
+    assert mergesort(backwards_sort) == range(31)
+
+
+def test_empty_list():
+    assert mergesort([]) == []
+
+
+def test_list_len_one():
+    assert mergesort([2]) == [2]
