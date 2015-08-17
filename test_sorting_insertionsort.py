@@ -56,3 +56,10 @@ def test_various_length():
 def test_badinput():
     with pytest.raises(TypeError):
         insertion_sort('bad', 123, [6, 7], ('hi', 2))
+
+
+def test_best():
+    x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    insertion_sort(x)
+    expected = sorted(x)
+    assert expected == x
