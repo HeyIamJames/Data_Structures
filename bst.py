@@ -13,6 +13,7 @@ class Node(object):
         self.left = left
         self.right = right
         self.parent = parent
+        #self.depth = 1
 
     def balance(self):
         left_depth = self.left.depth() if self.left else 0
@@ -125,6 +126,47 @@ class Node(object):
             yield "\tnull%s [shape=point];" % r
             yield "\t%s -> null%s;" % (self.val, r)
 
+    def left_rotation(self):
+        old_root = self
+        new_root = old_root.right
+        old_root.right = new_root.left
+        new_root.left = old_root
+        return new_root
+
+    def right_rotation(self):
+        old_root = self
+        new_root = old_root.left
+        old_root.left = new_root.right
+        new_root.right = old_root
+        return new_root
+
+    def double_left_rotation(self):
+        old_root = self
+        old_root.right = old_root.right.right_rotation()
+        return old_root.left_rotation()
+
+    def double_right_rotation(self):
+        old_root = self
+        old_root.left = old_root.left.left_rotation()
+        return old_root.right_rotation()
+
+    def re_balance(self):
+        balance = self.balance()
+        if abs(balance) <= 1:
+            return self
+        elif balance > 1:
+            left_subtree = self.left
+            if left_subtree.balance() < 0:
+                return self.double_right_rotation()
+            else:
+                return self.right_rotation()
+        else:
+            right_subtree = self.right
+            if right_subtree.balance() > 0:
+                return self.double_left_rotation()
+            else:
+                return self.left_rotation()
+
 
 class BinarySearchTree(object):
     root = None
@@ -193,6 +235,9 @@ class BinarySearchTree(object):
         val = self.root.delete(val)
         self.set.remove(val)
         return None
+
+    def re_balance(self):
+        return self.root.re_balance()
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
