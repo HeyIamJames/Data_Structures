@@ -13,7 +13,6 @@ class Node(object):
         self.left = left
         self.right = right
         self.parent = parent
-        #self.depth = 1
 
     def balance(self):
         left_depth = self.left.depth() if self.left else 0

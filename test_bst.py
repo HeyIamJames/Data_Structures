@@ -34,6 +34,23 @@ def fixed_eight_node_bst():
     return tree
 
 
+@pytest.fixture
+def fixed_unbalanced_bst():
+    tree = BinarySearchTree()
+    tree.insert(15)
+    tree.insert(7)
+    tree.insert(20)
+    tree.insert(3)
+    tree.insert(9)
+    tree.insert(2)
+    tree.insert(4)
+    tree.insert(44)
+    tree.insert(1)
+    tree.insert(4)
+    tree.insert(5)
+    return tree
+
+
 def test_delete_node_0_child(fixed_eight_node_bst):
     tree = fixed_eight_node_bst
     assert tree.root.right.right.val == 44
@@ -137,7 +154,7 @@ def test_balance():
     tree.insert(4)
     tree.insert(5)
     tree.insert(1)
-    assert tree.balance() == 1
+    assert tree.balance() == -1
 
 
 def test_depth():
@@ -189,3 +206,17 @@ def test_breadth_first_populated(fixed_eight_node_bst):
     for i in my_tree.breadth_traversal():
         actual.append(i)
     assert expected == actual
+
+
+def test_balancing_heavyleft(fixed_unbalanced_bst):
+    my_tree = fixed_unbalanced_bst
+    assert my_tree.balance() == 2
+    my_tree.re_balance()
+    assert my_tree.balance() == -1
+
+
+def test_balancing_alreadybalanced(fixed_eight_node_bst):
+    my_tree = fixed_eight_node_bst
+    assert my_tree.balance() == 1
+    my_tree.re_balance()
+    assert my_tree.balance() == 1
