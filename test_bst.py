@@ -1,4 +1,4 @@
-from bst import BinarySearchTree, Node
+from bst import BinarySearchTree
 import pytest
 import random
 
