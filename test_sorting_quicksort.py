@@ -1,5 +1,6 @@
 from sorting_quicksort import quicksort
 from random import shuffle
+import pytest
 
 
 def test_randoms():
@@ -42,3 +43,23 @@ def test_ordered():
     quicksort(x)
     z = x
     assert z == x
+
+
+def test_various_length():
+    x = [1, 200, 600, 1234567, 99999, 7]
+    quicksort(x)
+    y = x
+    expected = [1, 7, 200, 600, 99999, 1234567]
+    assert expected == y
+
+
+def test_badinput():
+    with pytest.raises(TypeError):
+        quicksort('bad', 123, [6, 7], ('hi', 2))
+
+
+def test_best():
+    x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    quicksort(x)
+    expected = sorted(x)
+    assert expected == x
