@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+
 class Node(object):
     def __init__(self, val, pointer, priority=0):
         self.value = val
